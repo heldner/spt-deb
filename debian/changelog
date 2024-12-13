@@ -1,0 +1,8 @@
+spt (0.6-2) stable; urgency=low
+
+  * spt 0.6
+  * debian:
+    - using quilt
+    - first release
+
+ -- Stanislav Korolev <stan.korolev@mail.ru>  Fri, 13 Dec 2024 22:34:49 +0300

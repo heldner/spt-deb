@@ -1,0 +1,26 @@
+#!/usr/bin/make -f
+
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+export DEB_BUILD_OPTIONS = noautodbgsym
+
+SHELL := sh -e
+VERSION ?= 0.6
+
+%:
+	dh ${@}
+
+override_dh_auto_clean:
+	rm -rf .pc
+	$(MAKE) clean
+
+spt.c:
+	[ -d "$(CURDIR)/spt" ] || \
+		git clone --depth 1 --branch $(VERSION) https://github.com/pickfire/spt.git
+	mv spt/* .
+	rm -rf spt
+
+override_dh_auto_build: spt.c
+	$(MAKE) PREFIX=/usr
+
+override_dh_auto_install:
+	$(MAKE) install DESTDIR=$(CURDIR)/debian/spt PREFIX=/usr
